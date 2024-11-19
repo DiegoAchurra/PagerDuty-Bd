@@ -11,6 +11,7 @@ This repository contains the backend implementation for a PagerDuty dashboard th
 - [Setup](#setup)
 - [Project Structure](#project-structure)
 - [Endpoints](#endpoints)
+- [Issues](#issues)
 - [Running Tests](#running-tests)
 
 ## Overview
@@ -105,7 +106,7 @@ The application also generates CSV reports and visualizations to aid in data int
 
 ## Issues
 
-While working on the project, we realize that the API normally does not provide incidents data, which is crucial for this exercise. To address this, we implemented a fallback mechanism in the incident-fetching service. If the API response comes empty, the service is programmed to use mock data.
+- While working on the project, we realize that the API normally does not provide incidents data, which is crucial for this exercise. To address this, we implemented a fallback mechanism in the incident-fetching service. If the API response comes empty, the service is programmed to use mock data.
 
 ## Running Tests
 
