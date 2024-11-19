@@ -87,7 +87,7 @@ The application also generates CSV reports and visualizations to aid in data int
 │   ├── models.py              # Database models
 │   ├── routes.py              # Application routes to services
 │   ├── services/              # Business logic and data-fetching scripts
-│   │   ├── dashboard/ 		   # Logic for aggregating dashboard data
+│   │   ├── dashboard/ 	       # Logic for aggregating dashboard data
 │   │   └── fetchingAPI/       # Utilities for fetching data from PagerDuty API
 │   ├── static/                # Static assets like CSS and mock JSON
 │   └── templates/             # HTML templates for rendering
