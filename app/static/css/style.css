@@ -1,0 +1,31 @@
+/* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Navbar */
+.navbar-brand {
+    font-weight: bold;
+}
+
+/* Card Styling */
+.card {
+    border-radius: 0.5rem;
+}
+
+.card-header {
+    font-size: 1.25rem;
+}
+
+/* Table Styling */
+.table th, .table td {
+    vertical-align: middle;
+}
+
+/* Footer */
+footer {
+    background-color: #343a40;
+    color: white;
+    font-size: 0.9rem;
+}

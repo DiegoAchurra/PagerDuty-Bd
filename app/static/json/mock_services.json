@@ -1,0 +1,29 @@
+{
+  "services": [
+    {
+      "id": "PIJ90N7",
+      "summary": "My Application Service",
+      "type": "service",
+      "self": "https://api.pagerduty.com/services/PIJ90N7",
+      "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7",
+      "name": "My Application Service",
+      "status": "active",
+      "teams": [
+        {
+          "id": "PQ9K7I8",
+          "type": "team_reference",
+          "summary": "Engineering",
+          "self": "https://api.pagerduty.com/teams/PQ9K7I8",
+          "html_url": "https://subdomain.pagerduty.com/teams/PQ9K7I8"
+        }
+      ],
+      "escalation_policy": {
+        "id": "PT20YPA",
+        "type": "escalation_policy_reference",
+        "summary": "Another Escalation Policy",
+        "self": "https://api.pagerduty.com/escalation_policies/PT20YPA",
+        "html_url": "https://subdomain.pagerduty.com/escalation_policies/PT20YPA"
+      }
+    }
+  ]
+}

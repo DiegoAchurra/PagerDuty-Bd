@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PagerDuty Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">PagerDuty Dashboard</a>
+        </div>
+    </nav>
+
+    <header class="bg-primary text-white py-4 text-center">
+        <h1>Dashboard Overview</h1>
+        <p class="lead">A comprehensive view of PagerDuty data</p>
+    </header>
+
+    <main class="container my-5">
+        <!-- Total Services -->
+        <section class="mb-5">
+            <div class="card shadow">
+                <div class="card-header bg-secondary text-white">
+                    <h3 class="card-title">Total Services</h3>
+                </div>
+                <div class="card-body">
+                    <p class="fs-5"><strong>Total Number of Services:</strong> {{ data['package1_total_services'] }}</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Incidents Per Service -->
+        <section class="mb-5">
+            <div class="card shadow">
+                <div class="card-header bg-secondary text-white">
+                    <h3 class="card-title">Incidents Per Service</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Service Name</th>
+                                <th>Incident Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for service in data['package2_incidents_per_service'] %}
+                            <tr>
+                                <td>{{ service['name'] }}</td>
+                                <td>{{ service['count'] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Incidents by Service and Status -->
+        <section class="mb-5">
+            <div class="card shadow">
+                <div class="card-header bg-secondary text-white">
+                    <h3 class="card-title">Incidents by Service and Status</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Service Name</th>
+                                <th>Triggered</th>
+                                <th>Acknowledged</th>
+                                <th>Resolved</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for service in data['package3_incidents_by_service_status'] %}
+                            <tr>
+                                <td>{{ service['name'] }}</td>
+                                <td>{{ service['status_counts']['triggered'] }}</td>
+                                <td>{{ service['status_counts']['acknowledged'] }}</td>
+                                <td>{{ service['status_counts']['resolved'] }}</td>
+                                
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Teams and Related Services -->
+        <section class="mb-5">
+            <div class="card shadow">
+                <div class="card-header bg-secondary text-white">
+                    <h3 class="card-title">Teams and Related Services</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Total Teams:</strong> {{ data['package4_team_service_counts']['teams_count'] }}</p>
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Team Name</th>
+                                <th>Services</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for team in data['package4_team_service_counts']['teams'] %}
+                            <tr>
+                                <td>{{ team['name'] }}</td>
+                                <td>
+                                    {% for service in team['services'] %}
+                                        {{ service['name'] }}{% if not loop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Escalation Policies -->
+        <section class="mb-5">
+            <div class="card shadow">
+                <div class="card-header bg-secondary text-white">
+                    <h3 class="card-title">Escalation Policies</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Total Escalation Policies:</strong> {{ data['package5_escalation_policy_counts']['count'] }}</p>
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Policy Name</th>
+                                <th>Services</th>
+                                <th>Teams</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for policy in data['package5_escalation_policy_counts']['details'] %}
+                            <tr>
+                                <td>{{ policy['name'] }}</td>
+                                <td>
+                                    {% for service in policy['services'] %}
+                                        {{ service['name'] }}{% if not loop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {% for team in policy['teams'] %}
+                                        {{ team['name'] }}{% if not loop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-5 text-center">
+            <a href="/download/csv" class="btn btn-primary">
+                Download Dashboard Data as CSV
+            </a>
+        </section>
+
+
+        <!-- Service with the Most Incidents -->
+        <section class="mb-5">
+            <div class="card shadow">
+                <div class="card-header bg-secondary text-white">
+                    <h3 class="card-title">Service with the Most Incidents</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Service Name:</strong> {{ data['package7_most_incidents_data']['service_name'] }}</p>
+                    <p><strong>Total Incidents:</strong> {{ data['package7_most_incidents_data']['incident_count'] }}</p>
+                    <h5>Incident Breakdown by Status:</h5>
+                    <ul>
+                        {% for status, incidents in data['package7_most_incidents_data']['incidents_by_status'].items() %}
+                        <li><strong>{{ status.capitalize() }}:</strong>
+                            <ul>
+                                {% for incident in incidents %}
+                                <li>{{ incident['title'] }}</li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Incident Graph Data -->
+        <section class="mb-5">
+            <div class="card shadow">
+                <div class="card-header bg-secondary text-white">
+                    <h3 class="card-title">Incident Graph</h3>
+                </div>
+                <div class="card-body">
+                    <canvas id="incidentGraph"></canvas>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-white text-center py-4">
+        <p class="mb-0">&copy; {{ year }} PagerDuty Dashboard</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const graphData = {{ data['package8_graph_data'] | tojson }};
+        const ctx = document.getElementById('incidentGraph').getContext('2d');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: graphData.data.map(item => item.status),
+                datasets: [{
+                    label: 'Incident Count',
+                    data: graphData.data.map(item => item.count),
+                    backgroundColor: ['#dc3545','#007bff', '#28a745'],
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: graphData.title
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>
